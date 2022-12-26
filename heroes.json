@@ -13,9 +13,15 @@
       "element": "fire"
     },
     {
-      "id": "f8a23986-17e9-4c91-918d-11457dd4bbb6",
-      "name": "asdasd",
-      "description": "asdasd",
+      "id": "83c024ff-f9db-46ed-8f7c-dfa9d2e50f9b",
+      "name": "Georg",
+      "description": "nothing",
+      "element": "wind"
+    },
+    {
+      "id": "9f48c611-62f4-4209-b294-db7dcaa113ed",
+      "name": "Огонёк",
+      "description": "Челикс",
       "element": "earth"
     }
   ],

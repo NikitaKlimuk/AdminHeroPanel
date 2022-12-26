@@ -1,10 +1,12 @@
-import {useHttp} from '../../hooks/http.hook';
+import { useHttp } from '../../hooks/http.hook';
 import { useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { CSSTransition, TransitionGroup} from 'react-transition-group';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { createSelector } from 'reselect';
 
-import { heroesFetching, heroesFetched, heroesFetchingError, heroDeleted } from '../../actions';
+import { fetchHeroes } from '../../actions';
+import { heroDeleted } from '../heroesList/heroesSlice';
+
 import HeroesListItem from "../heroesListItem/HeroesListItem";
 import Spinner from '../spinner/Spinner';
 
@@ -23,33 +25,19 @@ const HeroesList = () => {
             }
         }
     );
-
-    // const filteredHeroes = useSelector(state => {
-    //     if (state.filters.activeFilter === 'all') {
-    //         return state.heroes.heroes;
-    //     } else {
-    //         return state.heroes.heroes.filter(item => item.element === state.filters.activeFilter);
-    //     }
-    // })
     
     const filteredHeroes = useSelector(filteredHeroesSelector);
 
-    const heroesLoadingStatus = useSelector(state => state.heroesLoadingStatus);
+    const heroesLoadingStatus = useSelector(state => state.heroes.heroesLoadingStatus);
     const dispatch = useDispatch();
     const {request} = useHttp();
 
     useEffect(() => {
-        dispatch(heroesFetching());
-        request("http://localhost:3001/heroes")
-            .then(data => dispatch(heroesFetched(data)))
-            .catch(() => dispatch(heroesFetchingError()))
-
+        dispatch(fetchHeroes(request)); 
         // eslint-disable-next-line
     }, []);
 
-    // Функция берет id и по нему удаляет ненужного персонажа из store
-    // ТОЛЬКО если запрос на удаление прошел успешно
-    // Отслеживайте цепочку действий actions => reducers
+
     const onDelete = useCallback((id) => {
         // Удаление персонажа по его id
         request(`http://localhost:3001/heroes/${id}`, "DELETE")
